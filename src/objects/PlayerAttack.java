@@ -40,6 +40,7 @@ public class PlayerAttack implements Runnable { // 시간없으니까 지금말�
 		collision = false;
 		
 		Thread bulletthread = new Thread(this); // 총알 충돌 thread 생성, 실행
+		bulletthread.setName("PlayerBullet");
 		bulletthread.start();
 
 	}

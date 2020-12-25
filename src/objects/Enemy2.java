@@ -37,7 +37,7 @@ public class Enemy2 extends EnemyUnit {
 	}
 
 	public void move() {
-		new Thread(new Runnable() {
+		Thread t2 = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				count = 0;
@@ -45,8 +45,8 @@ public class Enemy2 extends EnemyUnit {
 					try {
 						Thread.sleep(5);
 
-						y--; // 속도는 여기서 조절하면 됨
 						if (y > 100) {
+							y--; // 속도는 여기서 조절하면 됨
 							moveup();
 							moveright();
 						}
@@ -64,11 +64,14 @@ public class Enemy2 extends EnemyUnit {
 					}
 				}
 			}
-		}).start();
+		});
+		
+		t2.setName("enemy2");
+		t2.start();
 	}
 
 	public void move2() {
-		new Thread(new Runnable() {
+		Thread t2 = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				count = 0;
@@ -78,10 +81,16 @@ public class Enemy2 extends EnemyUnit {
 
 						y--;
 
-						if (y > 50) {
+						if (y > 100) {
 							moveup();
 							moveleft();
 						}
+						
+						if (y < -100) {
+							System.out.println("enemy2 쓰레드 종료");
+							break;
+						}
+						
 						bulletCreate();
 						enemyAttack();
 						count++;
@@ -91,7 +100,10 @@ public class Enemy2 extends EnemyUnit {
 					}
 				}
 			}
-		}).start();
+		});
+		
+		t2.setName("enemy2");
+		t2.start();
 	}
 
 	public void crush() { // 적비행기-Player 충돌
@@ -101,7 +113,7 @@ public class Enemy2 extends EnemyUnit {
 			@Override
 			public void run() {
 
-				while (player.getLife() > 0) {
+				while (player.getLife() > 0 && y < 900 && y<-100) {
 
 					if (Math.abs((player.getX() + player.getWidth() / 2) - (x + player.getWidth() / 2)) < (width / 2
 							+ player.getWidth() / 2)

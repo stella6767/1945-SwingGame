@@ -1,38 +1,20 @@
 package frame;
 
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Vector;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
-import objects.Boss;
-import objects.Enemy1;
-import objects.Enemy2;
-import objects.Enemy3;
-import objects.Enemy4;
-import objects.Enemy5;
-import objects.Enemy6;
-import objects.EnemyUnit;
 import objects.PlayerPlane;
 
-public class GameFrame extends JFrame implements Initable {
+public class GameFrame extends JFrame implements screenSize {
 
-	public GameFrame gameFrame = this;
-
+	private GameFrame gameFrame = this;
 	public boolean isgame; // 게임실행 여부
-	private GamePanel gamePanel; // 인게임 패널 이거 잘 봐야된다. 오류 !!
-	private GameTitle gameTitle; // 타이틀 인트로 패널
-	private SelectAPI selectAPI; //선택 패널
+	public GamePanel gamePanel; // 인게임 패널 이거 잘 봐야된다. 오류 !!
+	public GameTitle gameTitle; // 타이틀 인트로 패널
+	public SelectAPI selectAPI; // 선택 패널
+	public PlayerPlane player; // 플레이어 선언
 
 	public GameFrame() {
 		init();
@@ -43,6 +25,7 @@ public class GameFrame extends JFrame implements Initable {
 	}
 
 	public void init() {
+
 		change("gameTitle"); // 초기 타이틀 화면
 		isgame = false; // 게임 중 이지 않은 상태
 	}
@@ -53,9 +36,6 @@ public class GameFrame extends JFrame implements Initable {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 	}
-
-	
-
 
 	// 패널 바꾸기 함수
 	public void change(String panelName) {
@@ -72,7 +52,7 @@ public class GameFrame extends JFrame implements Initable {
 			revalidate();
 			repaint();
 		} else if (panelName.equals("gameMap")) {
-			gamePanel = new GamePanel();
+			gamePanel = new GamePanel(gameFrame);
 			getContentPane().removeAll();
 			getContentPane().add(gamePanel);
 			revalidate();
@@ -88,12 +68,59 @@ public class GameFrame extends JFrame implements Initable {
 		}
 	}
 
+	public void listener() {
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				switch (e.getKeyCode()) {
+				case KeyEvent.VK_1:
+					player.setWepponLevelUp(true);
+					break;
+				case KeyEvent.VK_ENTER:
+					change("selectAPL");
+					break;
+				case KeyEvent.VK_SPACE:
+					player.setAttack(true);
+					break;
+				case KeyEvent.VK_UP:
+					player.setUp(true);
+					break;
+				case KeyEvent.VK_DOWN:
+					player.setDown(true);
+					break;
+				case KeyEvent.VK_LEFT:
+					player.setLeft(true);
+					break;
+				case KeyEvent.VK_RIGHT:
+					player.setRight(true);
+					break;
+				}
+			}
 
-
-
-
-
-
-
+			@Override
+			public void keyReleased(KeyEvent e) {
+				switch (e.getKeyCode()) {
+				case KeyEvent.VK_1:
+					player.setWepponLevelUp(false);
+					break;
+				case KeyEvent.VK_SPACE:
+					player.setAttack(false);
+					break;
+				case KeyEvent.VK_UP:
+					player.setUp(false);
+					break;
+				case KeyEvent.VK_DOWN:
+					player.setDown(false);
+					break;
+				case KeyEvent.VK_LEFT:
+					player.setLeft(false);
+					break;
+				case KeyEvent.VK_RIGHT:
+					player.setRight(false);
+					break;
+				}
+			}
+		});
+	}
 
 }

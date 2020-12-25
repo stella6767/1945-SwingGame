@@ -6,23 +6,19 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public abstract class EnemyUnit extends JLabel { //public으로 선언해야지 다른 패키지에서 접근가능!
+public abstract class EnemyUnit extends JLabel { // public으로 선언해야지 다른 패키지에서 접근가능!
 
 	protected int x;
 	protected int y;
 	protected PlayerPlane player;
-	protected boolean collision = false;
 	protected int width;
 	protected int height;
 	protected Image image;
 	protected int life;
-	protected boolean crushCheck; //플레이어 총알이 적기에 맞았는지 체크용
+	protected boolean collision = false;//플레이어와 적기몸체가 충돌시 체크
+	protected boolean crushCheck; // 플레이어 총알이 적기에 맞았는지 체크용
 	protected int count; // 총알 발사 속도조절
 
-	
-	
-	
-	
 	public int getX() {
 		return x;
 	}
@@ -130,7 +126,7 @@ public abstract class EnemyUnit extends JLabel { //public으로 선언해야지 
 
 	public abstract void enemyUpdate(Graphics g);
 
-	//적기가 아군 비행기와 충돌시 수행
+	// 적기가 아군 비행기와 충돌시 수행
 	public void explosePlayer(PlayerPlane player, EnemyUnit enemyUnit) { // 충돌후 이미지 변경 및 목숨카운트
 
 		try {
@@ -158,7 +154,7 @@ public abstract class EnemyUnit extends JLabel { //public으로 선언해야지 
 		try {
 			ImageIcon explosionIcon = new ImageIcon("images/explosion.gif");
 			enemyUnit.image = explosionIcon.getImage();
-			
+
 			System.out.println("적기와 아군비행기 총알 충돌");
 			Thread.sleep(1000);
 			enemyUnit.y = 1000; // Thread 강제종료 방법이 마땅히 안 떠오름 대충 이렇게

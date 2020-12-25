@@ -192,7 +192,7 @@ public class Boss {
 
 
 	public void move() {
-		new Thread(new Runnable() {
+		Thread bossThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				bCount = 0;
@@ -208,7 +208,11 @@ public class Boss {
 					}
 				}
 			}
-		}).start();
+		});
+		
+		bossThread.setName("Boss");
+		
+		bossThread.start();
 	}
 
 	

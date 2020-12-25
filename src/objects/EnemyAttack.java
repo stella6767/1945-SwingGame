@@ -6,6 +6,9 @@ import javax.swing.ImageIcon;
 
 public class EnemyAttack implements Runnable {
 	// 클래스 이름을 크게 Bullet이라 짓고 둘이 상속받는게 좋았을 듯, 일단 시간없으니 진행
+	
+	private EnemyAttack enemyAttack = this;
+	
 	private frame.GameFrame gameFrame;
 	private EnemyUnit enemyunit;
 	private PlayerPlane player;
@@ -39,6 +42,7 @@ public class EnemyAttack implements Runnable {
 		this.collision = false;
 
 		Thread bulletthread = new Thread(this); // 총알 충돌 thread 생성, 실행
+		bulletthread.setName("EnemyBullet");
 		bulletthread.start();
 	}
 
@@ -183,7 +187,8 @@ public class EnemyAttack implements Runnable {
 		try {
 			ImageIcon explosionIcon = new ImageIcon("images/explosion.gif");
 			player.setIcon(explosionIcon);
-			Thread.sleep(1000);
+			enemyAttack = null; //부딪칠시 적 총알 사라짐 안되네...
+			Thread.sleep(1000); //플레이어 쓰레드?
 			player.setIcon(player.getPlayerIcon());
 			player.setLife(player.getLife() - 1);
 			System.out.println("남은목숨:" + player.getLife());

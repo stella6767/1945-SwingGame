@@ -20,18 +20,13 @@ import objects.Enemy6;
 import objects.EnemyUnit;
 import objects.PlayerPlane;
 
-public class GamePanel extends JPanel { //인게임 패널
-	
-	private PlayerPlane player; // 플레이어 선언
+public class GamePanel extends JPanel { // 인게임 패널
+
+	private GameFrame gameFrame;
 
 	private EnemyUnit enemyUnit;
 	private Boss boss; // 보스 선언
-
-	public boolean isgame; // 게임실행 여부
-	private GamePanel gamePanel; // 인게임 패널 이거 잘 봐야된다. 오류 !!
-	private GameTitle gameTitle; // 타이틀 패널
-
-
+	
 	private JLabel laLifecount, laLifecount2, laLifecount3; // lifecount 라벨
 	private ImageIcon lifeCounticon;
 
@@ -51,14 +46,15 @@ public class GamePanel extends JPanel { //인게임 패널
 
 	Vector<EnemyUnit> enemyUnits = new Vector<>(); // 적 유닛을 모아놓을 배열
 
-	
-	
-	public GamePanel() {
+	public GamePanel(GameFrame gameFrame) {
+
+		this.gameFrame = gameFrame;
+
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				while (true) {
-					isgame = true;
+					gameFrame.isgame = true;
 					setLayout(null);
 					// lifeLaInit();
 
@@ -110,8 +106,8 @@ public class GamePanel extends JPanel { //인게임 패널
 			}
 		}
 
-		if (player != null) {
-			player.playerUpdate(g);
+		if (gameFrame.player != null) {
+			gameFrame.player.playerUpdate(g);
 		}
 
 		if (boss != null) {
@@ -120,8 +116,7 @@ public class GamePanel extends JPanel { //인게임 패널
 
 		repaint();
 	}
-	
-	
+
 	private void lifeLaInit() { // 당장 안 써요. 괜히 만들어달라 했나..
 		lifeCounticon = new ImageIcon("images/LifeCount.png");
 		laLifecount = new JLabel(lifeCounticon);
@@ -133,17 +128,17 @@ public class GamePanel extends JPanel { //인게임 패널
 	}
 
 	public void lifeCounting() {
-		if (player.getLife() == 3) {
+		if (gameFrame.player.getLife() == 3) {
 			laLifecount.setVisible(true);
 			laLifecount2.setVisible(true);
 			laLifecount3.setVisible(true);
 			repaint();
-		} else if (player.getLife() == 2) {
+		} else if (gameFrame.player.getLife() == 2) {
 			laLifecount.setVisible(true);
 			laLifecount2.setVisible(true);
 			laLifecount3.setVisible(false);
 			repaint();
-		} else if (player.getLife() == 1) {
+		} else if (gameFrame.player.getLife() == 1) {
 			laLifecount.setVisible(true);
 			laLifecount2.setVisible(false);
 			laLifecount3.setVisible(false);
@@ -155,136 +150,80 @@ public class GamePanel extends JPanel { //인게임 패널
 			repaint();
 		}
 	}
-	
-	
+
 	public void crushBorder() { // 벽에 충돌하는 조건함수 >> Map 스레드 안에 적용
-		if (player.getX() <= 0) {
-			player.setX(0);
+		if (gameFrame.player.getX() <= 0) {
+			gameFrame.player.setX(0);
 			repaint();
-		} else if (player.getX() >= 585) {
-			player.setX(585);
+		} else if (gameFrame.player.getX() >= 585) {
+			gameFrame.player.setX(585);
 			repaint();
 		}
-		if (player.getY() <= 0) {
-			player.setY(0);
+		if (gameFrame.player.getY() <= 0) {
+			gameFrame.player.setY(0);
 			repaint();
-		} else if (player.getY() >= 720) {
-			player.setY(720);
+		} else if (gameFrame.player.getY() >= 720) {
+			gameFrame.player.setY(720);
 			repaint();
 		}
 	}
-	
-	
-	
+
 	public void enemyBatch() { // 적기 맵에 배치
 
 		if (appear == 5000) {
-			enemyUnits.add(new Enemy2(player, -100, 300, 150,150)); //而⑦뀓�뒪�듃 �꽆湲곌린
-			enemyUnits.add(new Enemy2(player, 500, 300, 150,150));
+			enemyUnits.add(new Enemy2(gameFrame.player, -100, 300, 150, 150)); // 而⑦뀓�뒪�듃 �꽆湲곌린
+			enemyUnits.add(new Enemy2(gameFrame.player, 500, 300, 150, 150));
 		}
 
 		if (appear == 1000 || appear == 3000) {
-			enemyUnits.add(new Enemy1(player, 50, 0, 50, 50));
-			enemyUnits.add(new Enemy1(player, 100, -50, 50, 50));
-			enemyUnits.add(new Enemy1(player, 150, -100, 50, 50));
-			enemyUnits.add(new Enemy1(player, 200, -150, 50, 50));
-			enemyUnits.add(new Enemy1(player, 250, -200, 50, 50));
+			enemyUnits.add(new Enemy1(gameFrame.player, 50, 0, 50, 50));
+			enemyUnits.add(new Enemy1(gameFrame.player, 100, -50, 50, 50));
+			enemyUnits.add(new Enemy1(gameFrame.player, 150, -100, 50, 50));
+			enemyUnits.add(new Enemy1(gameFrame.player, 200, -150, 50, 50));
+			enemyUnits.add(new Enemy1(gameFrame.player, 250, -200, 50, 50));
 		}
 
 		if (appear == 2000 || appear == 4000) {
-			enemyUnits.add(new Enemy1(player, 500, 0, 50, 50));
-			enemyUnits.add(new Enemy1(player, 450, -50, 50, 50));
-			enemyUnits.add(new Enemy1(player, 400, -100, 50, 50));
-			enemyUnits.add(new Enemy1(player, 350, -150, 50, 50));
-			enemyUnits.add(new Enemy1(player, 300, -200, 50, 50));
+			enemyUnits.add(new Enemy1(gameFrame.player, 500, 0, 50, 50));
+			enemyUnits.add(new Enemy1(gameFrame.player, 450, -50, 50, 50));
+			enemyUnits.add(new Enemy1(gameFrame.player, 400, -100, 50, 50));
+			enemyUnits.add(new Enemy1(gameFrame.player, 350, -150, 50, 50));
+			enemyUnits.add(new Enemy1(gameFrame.player, 300, -200, 50, 50));
 		}
 
-		if (appear == 500 || appear == 1500 || appear == 3500 || appear == 5000 || appear == 6000) {
-			enemyUnits.add(new Enemy3(player, 600, -200, 100, 100)); // 컨텍스트 넘기기
-			enemyUnits.add(new Enemy4(player, 0, 0, 100, 100));
+//		if (appear == 500 || appear == 1500 || appear == 3500 || appear == 5000 || appear == 6000) {
+//			enemyUnits.add(new Enemy3(gameFrame.player, 600, -200, 100, 100)); // 컨텍스트 넘기기
+//			enemyUnits.add(new Enemy4(gameFrame.player, 0, 0, 100, 100));
+//		}
+//
+//		if (appear == 6000) {
+//			enemyUnits.add(new Enemy5(gameFrame.player, 300, -50, 100, 100));
+//			enemyUnits.add(new Enemy5(gameFrame.player, 500, -50, 100, 100));
+//		}
+
+		if (appear == 7000) {
+			enemyUnits.add(new Enemy6(gameFrame.player, 650, 400, 200, 200));
+
 		}
 		
-		
-		if(appear == 6000) {
-			enemyUnits.add(new Enemy5(player, 300, -50, 100, 100));
-			enemyUnits.add(new Enemy5(player, 500, -50, 100, 100));
+		if (appear == 500 ) {
+			enemyUnits.add(new Enemy2(gameFrame.player, -100, 300, 150, 150)); // 而⑦뀓�뒪�듃 �꽆湲곌린
+			enemyUnits.add(new Enemy2(gameFrame.player, 500, 300, 150, 150));
 		}
-		
-		if(appear == 7000) {
-			enemyUnits.add(new Enemy6(player, 650, 400, 200, 200));
-		
+
+		if (appear == 8000) {
+			enemyUnits.add(new Enemy2(gameFrame.player, 100, 0, 50, 50));
+			enemyUnits.add(new Enemy1(gameFrame.player, 100, 0, 50, 50));
+			enemyUnits.add(new Enemy1(gameFrame.player, 200, 0, 50, 50));
+			enemyUnits.add(new Enemy1(gameFrame.player, 300, 0, 50, 50));
+			enemyUnits.add(new Enemy1(gameFrame.player, 400, 0, 50, 50));
+			enemyUnits.add(new Enemy1(gameFrame.player, 500, 0, 50, 50));
 		}
-		
-		if (appear ==  8000) {
-			enemyUnits.add(new Enemy2(player, 100, 0, 50, 50));
-			enemyUnits.add(new Enemy1(player, 100, 0, 50, 50));
-			enemyUnits.add(new Enemy1(player, 200, 0, 50, 50));
-			enemyUnits.add(new Enemy1(player, 300, 0, 50, 50));
-			enemyUnits.add(new Enemy1(player, 400, 0, 50, 50));
-			enemyUnits.add(new Enemy1(player, 500, 0, 50, 50));
-		}
-		
-		
+
 		if (appear == 10000) {
 			enemyUnits.removeAllElements();
-			boss = new Boss(player, 0, -300);
+			boss = new Boss(gameFrame.player, 0, -300);
 		}
-	} 
-	
-
-	public void listener() {
-		addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				switch (e.getKeyCode()) {
-				case KeyEvent.VK_1:
-					player.setWepponLevelUp(true);
-					break;
-				case KeyEvent.VK_ENTER:
-					change("selectAPL");
-					break;
-				case KeyEvent.VK_SPACE:
-					player.setAttack(true);
-					break;
-				case KeyEvent.VK_UP:
-					player.setUp(true);
-					break;
-				case KeyEvent.VK_DOWN:
-					player.setDown(true);
-					break;
-				case KeyEvent.VK_LEFT:
-					player.setLeft(true);
-					break;
-				case KeyEvent.VK_RIGHT:
-					player.setRight(true);
-					break;
-				}
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				switch (e.getKeyCode()) {
-				case KeyEvent.VK_1:
-					player.setWepponLevelUp(false);
-					break;
-				case KeyEvent.VK_SPACE:
-					player.setAttack(false);
-					break;
-				case KeyEvent.VK_UP:
-					player.setUp(false);
-					break;
-				case KeyEvent.VK_DOWN:
-					player.setDown(false);
-					break;
-				case KeyEvent.VK_LEFT:
-					player.setLeft(false);
-					break;
-				case KeyEvent.VK_RIGHT:
-					player.setRight(false);
-					break;
-				}
-			}
-		});
 	}
 
 }

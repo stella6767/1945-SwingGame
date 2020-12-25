@@ -410,7 +410,7 @@ public class PlayerPlane extends JLabel {
 
 
 	public void move() {
-		new Thread(new Runnable() {
+		Thread t1 =new Thread(new Runnable() {
 			@Override
 			public void run() {
 				pCount = 0; // count를 0으로 설정
@@ -429,7 +429,9 @@ public class PlayerPlane extends JLabel {
 					}
 				}
 			}
-		}).start();
+		});
+		t1.setName("Player");
+		t1.start();
 	}
 
 	private void keyProcess() {

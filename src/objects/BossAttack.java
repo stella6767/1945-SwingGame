@@ -42,6 +42,7 @@ public class BossAttack implements Runnable {
 		this.collision = false;
 
 		Thread bulletthread = new Thread(this); // 총알 충돌 thread 생성, 실행
+		bulletthread.setName("Boss Bullet");
 		bulletthread.start();
 	}
 
@@ -219,6 +220,7 @@ public class BossAttack implements Runnable {
 		try {
 			ImageIcon explosionIcon = new ImageIcon("images/explosion.gif");
 			player.setIcon(explosionIcon);
+			y=1000; //플레이어와 부딪히면 보스총알 사라짐
 			Thread.sleep(1000);
 			player.setIcon(player.getPlayerIcon());
 			player.setLife(player.getLife() - 1);

@@ -10,22 +10,24 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import frame.GameFrame.SelectAPL;
 import objects.PlayerPlane;
 
-public class SelectAPI extends JPanel implements panelCommon{
+public class SelectAPI extends JPanel implements screenSize{
 
-	private GameFrame win;
-	private SelectAPL selectAPL = this;
+	private GameFrame gameFrame;
+	private SelectAPI selectAPI = this;
 	private ImageIcon player1Icon, player2Icon, player3Icon; // 플레이어 기체 이미지
 	private ImageIcon planeDetailIcon1, planeDetailIcon2, planeDetailIcon3; // 기체 상세설명 이미지
 	private ImageIcon bigPlayer1icon, bigPlayer2icon, bigPlayer3icon; // 버튼 누를시 커지는 이미지
 	private ImageIcon selectPlaneIcon = new ImageIcon("images/SelectPlane1.png");
 	private Image selectPlaneImg = selectPlaneIcon.getImage();
+	
 
-	public SelectAPI(GameFrame win) {
+	public SelectAPI(GameFrame gameFrame) {
+		
 		setLayout(null);
-		this.win = win;
+		
+		this.gameFrame = gameFrame;
 
 		player1Icon = new ImageIcon("images/PlayerPlane1.png");
 		player2Icon = new ImageIcon("images/PlayerPlane2.png");
@@ -63,7 +65,7 @@ public class SelectAPI extends JPanel implements panelCommon{
 		btn1.addMouseListener(new MouseAdapter() { // 버튼 클릭 리스너
 			@Override
 			public void mousePressed(MouseEvent e) {
-				change("gameMap");
+				gameFrame.change("gameMap");
 				batch("playerPlane");
 			}
 
@@ -84,7 +86,7 @@ public class SelectAPI extends JPanel implements panelCommon{
 		btn2.addMouseListener(new MouseAdapter() { // 버튼 클릭 리스너
 			@Override
 			public void mousePressed(MouseEvent e) {
-				change("gameMap");
+				gameFrame.change("gameMap");
 				batch("playerPlane2");
 			}
 
@@ -106,7 +108,7 @@ public class SelectAPI extends JPanel implements panelCommon{
 		btn3.addMouseListener(new MouseAdapter() { // 버튼 클릭 리스너
 			@Override
 			public void mousePressed(MouseEvent e) {
-				change("gameMap");
+				gameFrame.change("gameMap");
 				batch("playerPlane3");
 			}
 
@@ -146,18 +148,17 @@ public class SelectAPI extends JPanel implements panelCommon{
 	
 	public void batch(String playerPlane) { // 비행기 선택 후 비행기 new add
 		if (playerPlane == "playerPlane") {
-			this.player = new PlayerPlane("PLANE1");
-			gamePanel.add(this.player);
+			gameFrame.player = new PlayerPlane("PLANE1");
+			gameFrame.gamePanel.add(gameFrame.player);
 		} else if (playerPlane == "playerPlane2") {
-			this.player = new PlayerPlane("PLANE2");
-			gamePanel.add(this.player);
+			gameFrame.player = new PlayerPlane("PLANE2");
+			gameFrame.gamePanel.add(gameFrame.player);
 		} else if (playerPlane == "playerPlane3") {
-			this.player = new PlayerPlane("PLANE3");
-			gamePanel.add(this.player);
+			gameFrame.player = new PlayerPlane("PLANE3");
+			gameFrame.gamePanel.add(gameFrame.player);
 		}
 	}
 	
-	
-	
-	
+
+
 }
