@@ -26,6 +26,7 @@ public class BossAttack implements Runnable {
 	private double speed = 2; // 총알속도
 	private int width;
 	private int height;
+	private boolean islife; //Thread를 삭제시키기 위한 구문
 
 	public BossAttack(Boss boss, PlayerPlane player, double x, double y, double angel, double speed, int width,
 			int height) {
@@ -38,6 +39,7 @@ public class BossAttack implements Runnable {
 		this.speed = speed;
 		this.width = width;
 		this.height = height;
+		this.islife = true;
 
 		this.collision = false;
 
@@ -178,7 +180,7 @@ public class BossAttack implements Runnable {
 	@Override
 	public void run() {
 
-		while (player.getLife() > 0) { // 생명이 0보다 크면
+		while (player.getLife() > 0 && islife) { // 생명이 0보다 크면
 
 			crash();
 
@@ -220,7 +222,8 @@ public class BossAttack implements Runnable {
 		try {
 			ImageIcon explosionIcon = new ImageIcon("images/explosion.gif");
 			player.setIcon(explosionIcon);
-			y=1000; //플레이어와 부딪히면 보스총알 사라짐
+			//y=1000; //플레이어와 부딪히면 보스총알 사라짐
+			islife = false;
 			Thread.sleep(1000);
 			player.setIcon(player.getPlayerIcon());
 			player.setLife(player.getLife() - 1);

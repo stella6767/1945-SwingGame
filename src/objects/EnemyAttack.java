@@ -26,6 +26,7 @@ public class EnemyAttack implements Runnable {
 	private double speed = 2; // 총알속도
 	private int width;
 	private int height;
+	private boolean islife;
 
 	public EnemyAttack(EnemyUnit enemyunit, PlayerPlane player, int x, int y, double angel, double speed, int width,
 			int height) {
@@ -38,6 +39,7 @@ public class EnemyAttack implements Runnable {
 		this.speed = speed;
 		this.width = width;
 		this.height = height;
+		this.islife = true;
 
 		this.collision = false;
 
@@ -134,7 +136,7 @@ public class EnemyAttack implements Runnable {
 	@Override
 	public void run() {
 
-		while (true) {
+		while (islife) {
 			
 			fire(); 
 			
@@ -187,7 +189,9 @@ public class EnemyAttack implements Runnable {
 		try {
 			ImageIcon explosionIcon = new ImageIcon("images/explosion.gif");
 			player.setIcon(explosionIcon);
-			enemyAttack = null; //부딪칠시 적 총알 사라짐 안되네...
+			//enemyAttack= null; //부딪칠시 적 총알 사라짐 안되네... 자바에서는 객체를 직접 제거하는 게 안되고
+			//y=1000; //가비지 컬렉션으로만 가능, 강제로 제거하려면 finallize 함수?
+			islife = false;//이게아닌가벼
 			Thread.sleep(1000); //플레이어 쓰레드?
 			player.setIcon(player.getPlayerIcon());
 			player.setLife(player.getLife() - 1);

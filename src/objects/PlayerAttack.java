@@ -21,6 +21,7 @@ public class PlayerAttack implements Runnable { // 시간없으니까 지금말�
 	private double speed; // 총알 속도
 	private int width;
 	private int height;
+	private boolean islife; //Thread를 삭제시키기 위한 구문
 
 	public PlayerAttack() {
 		// TODO Auto-generated constructor stub
