@@ -25,7 +25,6 @@ public class GameFrame extends JFrame implements screenSize {
 	}
 
 	public void init() {
-
 		change("gameTitle"); // 초기 타이틀 화면
 		isgame = false; // 게임 중 이지 않은 상태
 	}

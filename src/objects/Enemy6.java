@@ -108,7 +108,7 @@ public class Enemy6 extends EnemyUnit {
 		if (count % 100 == 0) {
 			enemyAttack = new EnemyAttack(enemy6, player, x + 20, y + 40, 270, 2, 50, 50);
 			enemyAttackkList.add(enemyAttack);
-			enemyAttack = new EnemyAttack(enemy6, player, x + 100, y + 40, 270, 2, 50, 50);
+			enemyAttack = new EnemyAttack(enemy6, player, x + 140, y + 40, 270, 2, 50, 50);
 			enemyAttackkList.add(enemyAttack);
 
 		}

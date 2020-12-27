@@ -22,11 +22,12 @@ import objects.PlayerPlane;
 
 public class GamePanel extends JPanel { // 인게임 패널
 
+	private GamePanel gamePanel = this;
 	private GameFrame gameFrame;
 
 	private EnemyUnit enemyUnit;
 	private Boss boss; // 보스 선언
-	
+
 	private JLabel laLifecount, laLifecount2, laLifecount3; // lifecount 라벨
 	private ImageIcon lifeCounticon;
 
@@ -49,20 +50,20 @@ public class GamePanel extends JPanel { // 인게임 패널
 	public GamePanel(GameFrame gameFrame) {
 
 		this.gameFrame = gameFrame;
+		
+		lifeLaInit();
+		gamePanel.add(laLifecount);
+		gamePanel.add(laLifecount2);
+		gamePanel.add(laLifecount3);
 
+		
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				while (true) {
 					gameFrame.isgame = true;
 					setLayout(null);
-					// lifeLaInit();
-
-					// 플레이어 생명 표시
-					// 이걸 너무 막 넣었네.. 매번 쓰레드 돌아갈 때마다 연산하고 new하고 추가하고, add하면 느려집니다..
-//					gamePanel.add(laLifecount);
-//					gamePanel.add(laLifecount2);
-//					gamePanel.add(laLifecount3);
+					
 
 					stageY++;
 					bossStageBY1++;
@@ -78,7 +79,7 @@ public class GamePanel extends JPanel { // 인게임 패널
 						}
 					}
 					try {
-						// lifeCounting();
+						lifeCounting();
 						enemyBatch();
 						crushBorder();
 						appear++;
@@ -155,8 +156,8 @@ public class GamePanel extends JPanel { // 인게임 패널
 		if (gameFrame.player.getX() <= 0) {
 			gameFrame.player.setX(0);
 			repaint();
-		} else if (gameFrame.player.getX() >= 585) {
-			gameFrame.player.setX(585);
+		} else if (gameFrame.player.getX() >= 550) {
+			gameFrame.player.setX(550);
 			repaint();
 		}
 		if (gameFrame.player.getY() <= 0) {
@@ -191,25 +192,21 @@ public class GamePanel extends JPanel { // 인게임 패널
 			enemyUnits.add(new Enemy1(gameFrame.player, 300, -200, 50, 50));
 		}
 
-//		if (appear == 500 || appear == 1500 || appear == 3500 || appear == 5000 || appear == 6000) {
-//			enemyUnits.add(new Enemy3(gameFrame.player, 600, -200, 100, 100)); // 컨텍스트 넘기기
-//			enemyUnits.add(new Enemy4(gameFrame.player, 0, 0, 100, 100));
-//		}
-//
-//		if (appear == 6000) {
-//			enemyUnits.add(new Enemy5(gameFrame.player, 300, -50, 100, 100));
-//			enemyUnits.add(new Enemy5(gameFrame.player, 500, -50, 100, 100));
-//		}
+		if (appear == 500 || appear == 1500 || appear == 3500 || appear == 5000 || appear == 6000) {
+			enemyUnits.add(new Enemy3(gameFrame.player, 600, -200, 100, 100)); // 컨텍스트 넘기기
+			enemyUnits.add(new Enemy4(gameFrame.player, 0, 0, 100, 100));
+		}
+
+		if (appear == 6000) {
+			enemyUnits.add(new Enemy5(gameFrame.player, 300, -50, 100, 100));
+			enemyUnits.add(new Enemy5(gameFrame.player, 500, -50, 100, 100));
+		}
 
 		if (appear == 7000) {
 			enemyUnits.add(new Enemy6(gameFrame.player, 650, 400, 200, 200));
 
 		}
-		
-		if (appear == 500 ) {
-			enemyUnits.add(new Enemy2(gameFrame.player, -100, 300, 150, 150)); // 而⑦뀓�뒪�듃 �꽆湲곌린
-			enemyUnits.add(new Enemy2(gameFrame.player, 500, 300, 150, 150));
-		}
+
 
 		if (appear == 8000) {
 			enemyUnits.add(new Enemy2(gameFrame.player, 100, 0, 50, 50));

@@ -10,6 +10,7 @@ public class EnemyAttack implements Runnable {
 	private EnemyAttack enemyAttack = this;
 	
 	private frame.GameFrame gameFrame;
+	
 	private EnemyUnit enemyunit;
 	private PlayerPlane player;
 	private boolean collision;
@@ -138,7 +139,7 @@ public class EnemyAttack implements Runnable {
 
 		while (islife) {
 			
-			fire(); 
+ 			fire(); 
 			
 			if (x > 1000 || x < -500 || y < -500 || y > 1000) {
 				// System.out.println("bullet thread terminate");
@@ -159,10 +160,13 @@ public class EnemyAttack implements Runnable {
 						explosePlayer(player); // 충돌 폭발 메서드
 					}
 					Thread.sleep(10);
-//				if (playerPlane.getLife() <= 0) {
-//					Thread.sleep(100); // 1초후
-//					System.exit(1); // 프로그램 종료
-//				}
+				if (player.getLife() <= 0) {
+					
+					System.out.println("hp 다 끝나면 종료");
+					Thread.sleep(100); // 1초후
+					//gameFrame.change("gameTitle");//context를 넘기는 과정 귀찮아서 생략한다.
+					System.exit(1); // 프로그램 종료
+				}
 
 
 
@@ -190,9 +194,9 @@ public class EnemyAttack implements Runnable {
 			ImageIcon explosionIcon = new ImageIcon("images/explosion.gif");
 			player.setIcon(explosionIcon);
 			//enemyAttack= null; //부딪칠시 적 총알 사라짐 안되네... 자바에서는 객체를 직접 제거하는 게 안되고
-			//y=1000; //가비지 컬렉션으로만 가능, 강제로 제거하려면 finallize 함수?
+			y=1000; //가비지 컬렉션으로만 가능, 강제로 제거하려면 finallize 함수?
 			islife = false;//이게아닌가벼
-			Thread.sleep(1000); //플레이어 쓰레드?
+			Thread.sleep(1000); 
 			player.setIcon(player.getPlayerIcon());
 			player.setLife(player.getLife() - 1);
 			System.out.println("남은목숨:" + player.getLife());

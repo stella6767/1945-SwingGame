@@ -119,7 +119,7 @@ public class Enemy3 extends EnemyUnit {
 
 	private void bulletCreate() {
 		if (count % 100 == 0) {
-			enemyAttack = new EnemyAttack(enemy3, player, x + 20, y + 40,270,3,20,20);
+			enemyAttack = new EnemyAttack(enemy3, player, x + 20, y + 40,270,5,20,20);
 			enemyAttackkList.add(enemyAttack);
 			
 			
@@ -133,9 +133,6 @@ public class Enemy3 extends EnemyUnit {
 	private void enemyAttack() {
 		for (int i = 0; i < enemyAttackkList.size(); i++) {
 			enemyAttack = enemyAttackkList.get(i);
-//			if (enemy3.life > 0)
-//				enemyAttack.fire();
-
 		}
 	}
 
