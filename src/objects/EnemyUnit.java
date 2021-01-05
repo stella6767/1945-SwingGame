@@ -15,9 +15,10 @@ public abstract class EnemyUnit extends JLabel { // public으로 선언해야지
 	protected int height;
 	protected Image image;
 	protected int life;
-	protected boolean collision = false;//플레이어와 적기몸체가 충돌시 체크
+	protected boolean collision = false;// 플레이어와 적기몸체가 충돌시 체크
 	protected boolean crushCheck; // 플레이어 총알이 적기에 맞았는지 체크용
 	protected int count; // 총알 발사 속도조절
+	protected boolean islife; // 스레드 생명
 
 	public int getX() {
 		return x;
@@ -135,12 +136,18 @@ public abstract class EnemyUnit extends JLabel { // public으로 선언해야지
 			enemyUnit.image = explosionIcon.getImage();
 			System.out.println("적기와 아군비행기 충돌");
 			Thread.sleep(500);
-			player.setIcon(player.getPlayerIcon());
+
+			player.setInvincible(true); // 무적상태
+			player.setIcon(player.getPlayerInvincibleIcon());
 			player.setLife(player.getLife() - 1);
 			System.out.println("남은목숨:" + player.getLife());
 			player.setX(200);
-			player.setY(700);
-			enemyUnit.y = 1000; // Thread 강제종료 방법이 마땅히 안 떠오름 대충 이렇게
+			player.setY(520);
+			Thread.sleep(1500);
+
+			player.setIcon(player.getPlayerIcon());
+			player.setInvincible(false);
+			enemyUnit.y = 1000; // 맵 바깥으로 적 던짐
 			player.repaint();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

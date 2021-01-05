@@ -23,6 +23,7 @@ public class Enemy5 extends EnemyUnit {
 		this.image = new ImageIcon("images/enemy5.png").getImage();
 		this.life = 3;
 		this.crushCheck = false;
+		this.islife = true;
 
 		this.player.contextAdd(enemy5);
 
@@ -36,28 +37,25 @@ public class Enemy5 extends EnemyUnit {
 			@Override
 			public void run() {
 				count = 0;
-				while (true) {
+				while (islife) {
 					try {
 						Thread.sleep(7);
-						
+
 						y++;
 						movedown();
-						
 
 						if (y < 450) {
 							moveleft();
 
-						}else moveright();
-						
-						
+						} else
+							moveright();
 
 						bulletCreate();
-						enemyAttack();
 						count++;
 
 						if (y > 900) {
 							// System.out.println("enemy5 쓰레드 종료");
-							break;
+							islife = false;
 						}
 
 					} catch (InterruptedException e) {
@@ -91,10 +89,6 @@ public class Enemy5 extends EnemyUnit {
 							explosePlayer(player, enemy5); // 충돌 폭발 메서드
 						}
 						Thread.sleep(10);
-//						if(playerPlane.getLife() <= 0) {
-//							Thread.sleep(100);						//1초후
-//							System.exit(1);							//프로그램 종료
-//						}
 
 						if (crushCheck) {
 							explosePlayer(enemy5);
@@ -124,21 +118,12 @@ public class Enemy5 extends EnemyUnit {
 		enemyDraw(g);
 	}
 
-	private void enemyAttack() {
-		for (int i = 0; i < enemyAttackkList.size(); i++) {
-			enemyAttack = enemyAttackkList.get(i);
-			//enemyAttack.fire();
-
-		}
-	}
-
 	public void enemyDraw(Graphics g) { // 그림그리기
 		g.drawImage(image, x, y, width, height, null);
 		for (int i = 0; i < enemyAttackkList.size(); i++) {
 			enemyAttack = enemyAttackkList.get(i);
 			g.drawImage(enemyAttack.bulletImg2, enemyAttack.getX(), enemyAttack.getY(), enemyAttack.getWidth(),
 					enemyAttack.getHeight(), null);
-
 
 		}
 	}

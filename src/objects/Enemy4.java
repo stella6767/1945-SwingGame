@@ -23,6 +23,7 @@ public class Enemy4 extends EnemyUnit {
 		this.image = new ImageIcon("images/enemy4.png").getImage();
 		this.life = 3;
 		this.crushCheck = false;
+		this.islife = true;
 
 		this.player.contextAdd(enemy4);
 
@@ -36,7 +37,7 @@ public class Enemy4 extends EnemyUnit {
 			@Override
 			public void run() {
 				count = 0;
-				while (true) {
+				while (islife) {
 					try {
 						Thread.sleep(5);
 
@@ -49,12 +50,11 @@ public class Enemy4 extends EnemyUnit {
 						}
 
 						bulletCreate();
-						enemyAttack();
 						count++;
 
 						if (y > 900) {
 							// System.out.println("enemy4 쓰레드 종료");
-							break;
+							islife =false;
 						}
 
 					} catch (InterruptedException e) {
@@ -88,10 +88,6 @@ public class Enemy4 extends EnemyUnit {
 							explosePlayer(player, enemy4); // 충돌 폭발 메서드
 						}
 						Thread.sleep(10);
-//						if(playerPlane.getLife() <= 0) {
-//							Thread.sleep(100);						//1초후
-//							System.exit(1);							//프로그램 종료
-//						}
 
 						if (crushCheck) {
 							explosePlayer(enemy4);
@@ -111,7 +107,7 @@ public class Enemy4 extends EnemyUnit {
 
 	private void bulletCreate() {
 		if (count % 100 == 0) {
-			enemyAttack = new EnemyAttack(enemy4, player, x + 20, y + 40, 270, 3, 20, 20);
+			enemyAttack = new EnemyAttack(enemy4, player, x + 20, y + 40, 270, 4, 20, 20);
 			enemyAttackkList.add(enemyAttack);
 
 		}
@@ -119,15 +115,6 @@ public class Enemy4 extends EnemyUnit {
 
 	public void enemyUpdate(Graphics g) {
 		enemyDraw(g);
-	}
-
-	private void enemyAttack() {
-		for (int i = 0; i < enemyAttackkList.size(); i++) {
-			enemyAttack = enemyAttackkList.get(i);
-			if (enemy4.life > 0)
-				enemyAttack.fire();
-
-		}
 	}
 
 	public void enemyDraw(Graphics g) { // 그림그리기

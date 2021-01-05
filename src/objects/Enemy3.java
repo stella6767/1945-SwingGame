@@ -14,7 +14,7 @@ public class Enemy3 extends EnemyUnit {
 	ArrayList<EnemyAttack> enemyAttackkList = new ArrayList<EnemyAttack>();
 	private EnemyAttack enemyAttack;
 
-	public Enemy3(PlayerPlane player, int x, int y,int w, int h) {
+	public Enemy3(PlayerPlane player, int x, int y, int w, int h) {
 		this.player = player;
 		this.x = x;
 		this.y = y;
@@ -23,12 +23,13 @@ public class Enemy3 extends EnemyUnit {
 		this.image = new ImageIcon("images/enemy3.png").getImage();
 		this.life = 3;
 		this.crushCheck = false;
-		
+		this.islife = true;
+
 		this.player.contextAdd(enemy3);
 
-		this.move();		
+		this.move();
 		this.crush();
-		
+
 	}
 
 	public void move() {
@@ -36,29 +37,24 @@ public class Enemy3 extends EnemyUnit {
 			@Override
 			public void run() {
 				count = 0;
-				while (true) {
+				while (islife) {
 					try {
 						Thread.sleep(5);
-				
+
 						movedown();
 						y++;
-						
+
 						if (y < 400) {
 							moveleft();
-		
 						}
-						
+
 						bulletCreate();
-						enemyAttack();
 						count++;
-						
-						
+
 						if (y > 900) {
-							//System.out.println("enemy3 쓰레드 종료");
-							break;
+							// System.out.println("enemy3 쓰레드 종료");
+							islife = false;
 						}
-
-
 
 					} catch (InterruptedException e) {
 						e.printStackTrace();
@@ -67,11 +63,7 @@ public class Enemy3 extends EnemyUnit {
 			}
 		}).start();
 	}
-	
-	
 
-	
-	
 	public void crush() { // 적비행기-Player 충돌
 
 		new Thread(new Runnable() {
@@ -81,12 +73,10 @@ public class Enemy3 extends EnemyUnit {
 
 				while (!player.getInvincible() && y < 900 && y > -300) {
 
-					if (Math.abs((player.getX() + player.getWidth() / 2)
-							- (x + player.getWidth() / 2)) < (width / 2
-									+ player.getWidth() / 2)
-							&& Math.abs((player.getY() + player.getHeight() / 2)
-									- (y + height / 2)) < (height / 2
-											+ player.getHeight() / 2)) {
+					if (Math.abs((player.getX() + player.getWidth() / 2) - (x + player.getWidth() / 2)) < (width / 2
+							+ player.getWidth() / 2)
+							&& Math.abs((player.getY() + player.getHeight() / 2) - (y + height / 2)) < (height / 2
+									+ player.getHeight() / 2)) {
 						collision = true;
 					} else {
 						collision = false;
@@ -97,12 +87,8 @@ public class Enemy3 extends EnemyUnit {
 							explosePlayer(player, enemy3); // 충돌 폭발 메서드
 						}
 						Thread.sleep(10);
-//						if(playerPlane.getLife() <= 0) {
-//							Thread.sleep(100);						//1초후
-//							System.exit(1);							//프로그램 종료
-//						}
-						
-						if(crushCheck) {
+
+						if (crushCheck) {
 							explosePlayer(enemy3);
 						}
 					} catch (Exception e) {
@@ -115,14 +101,12 @@ public class Enemy3 extends EnemyUnit {
 		}).start();
 
 	}
-	
 
 	private void bulletCreate() {
 		if (count % 100 == 0) {
-			enemyAttack = new EnemyAttack(enemy3, player, x + 20, y + 40,270,5,20,20);
+			enemyAttack = new EnemyAttack(enemy3, player, x + 20, y + 40, 270, 5, 20, 20);
 			enemyAttackkList.add(enemyAttack);
-			
-			
+
 		}
 	}
 
@@ -130,19 +114,12 @@ public class Enemy3 extends EnemyUnit {
 		enemyDraw(g);
 	}
 
-	private void enemyAttack() {
-		for (int i = 0; i < enemyAttackkList.size(); i++) {
-			enemyAttack = enemyAttackkList.get(i);
-		}
-	}
-
 	public void enemyDraw(Graphics g) { // 그림그리기
-		g.drawImage(image, x, y,width, height, null);
+		g.drawImage(image, x, y, width, height, null);
 		for (int i = 0; i < enemyAttackkList.size(); i++) {
 			enemyAttack = enemyAttackkList.get(i);
 			g.drawImage(enemyAttack.bulletImg1, enemyAttack.getX(), enemyAttack.getY(), enemyAttack.getWidth(),
 					enemyAttack.getHeight(), null);
-
 
 		}
 	}

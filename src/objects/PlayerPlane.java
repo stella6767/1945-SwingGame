@@ -20,14 +20,7 @@ public class PlayerPlane extends JLabel {
 	ArrayList<EnemyUnit> enemyUnitList = new ArrayList<EnemyUnit>(); // 총알피격시 객체를 담을 벡터
 
 	private ImageIcon playerIcon;
-	private ImageIcon playerInvincibleIcon = new ImageIcon("images/그림2.png");
-	public ImageIcon getPlayerInvincibleIcon() {
-		return playerInvincibleIcon;
-	}
-
-	public void setPlayerInvincibleIcon(ImageIcon playerInvincibleIcon) {
-		this.playerInvincibleIcon = playerInvincibleIcon;
-	}
+	private ImageIcon playerInvincibleIcon;
 
 	private int width = 70;
 	private int height = 65;
@@ -35,11 +28,12 @@ public class PlayerPlane extends JLabel {
 	private int y = (GameFrame.SCREEN_HEIGHT - (height * 2));
 	private int life = 10;
 	private int pCount; // 총알 발사 속도
-	private boolean invincible; //무적상태
-
+	private boolean invincible; // 무적상태
+	
 	private int wepponLevel = 0;
 	public int select;// player 선택
-
+	
+	private boolean islife=true; //스레드 생명
 	public boolean isRight = false;
 	public boolean isLeft = false;
 	public boolean isUp = false;
@@ -55,10 +49,10 @@ public class PlayerPlane extends JLabel {
 	public PlayerPlane(String PLANE) {
 
 		playerIcon = new ImageIcon("images/Player" + PLANE + ".png");
-		//playerIcon = new ImageIcon("그림1.png");
-		
+		playerInvincibleIcon = new ImageIcon("images/" + PLANE + "무적.png");
+
 		this.invincible = false;
-		
+
 		System.out.println("images/Player" + PLANE + ".png");
 		if (PLANE.equals("PLANE1")) {
 			select = 1;
@@ -255,15 +249,22 @@ public class PlayerPlane extends JLabel {
 		return isWepponLevelUp;
 	}
 
+	public ImageIcon getPlayerInvincibleIcon() {
+		return playerInvincibleIcon;
+	}
+
+	public void setPlayerInvincibleIcon(ImageIcon playerInvincibleIcon) {
+		this.playerInvincibleIcon = playerInvincibleIcon;
+	}
+
 	public void move() {
 		Thread t1 = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				pCount = 0; // count를 0으로 설정
-				while (true) {
+				while (islife) {
 					try {
 						Thread.sleep(5);
-					
 						keyProcess();
 						playerAttackProcess();
 						PlayerBullet();
@@ -471,6 +472,5 @@ public class PlayerPlane extends JLabel {
 
 		return result;
 	}
-	
 
 }

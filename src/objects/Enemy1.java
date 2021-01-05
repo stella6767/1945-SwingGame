@@ -24,6 +24,7 @@ public class Enemy1 extends EnemyUnit {
 		this.image = new ImageIcon("images/enemy1.png").getImage();
 		this.life = 1;
 		this.crushCheck = false;
+		this.islife = true;
 
 		this.player.contextAdd(enemy1); // 동적으로 생성때마다 컨텍스트 플레이어에게 넘기기
 
@@ -35,7 +36,7 @@ public class Enemy1 extends EnemyUnit {
 		Thread t1 = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				while (true) {
+				while (islife) {
 					try {
 						Thread.sleep(2);
 
@@ -43,7 +44,7 @@ public class Enemy1 extends EnemyUnit {
 
 						if (y > 900) {
 							System.out.println("enemy1MoveThread 종료");
-							break;
+							islife = false;
 						}
 
 					} catch (InterruptedException e) {

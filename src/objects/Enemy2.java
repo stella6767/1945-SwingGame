@@ -23,6 +23,7 @@ public class Enemy2 extends EnemyUnit {
 		this.image = new ImageIcon("images/enemy2.png").getImage();
 		this.life = 10;
 		this.crushCheck = false;
+		this.islife = true;
 
 		this.player.contextAdd(enemy2);
 
@@ -42,7 +43,7 @@ public class Enemy2 extends EnemyUnit {
 			@Override
 			public void run() {
 				count = 0;
-				while (true) {
+				while (islife) {
 					try {
 						Thread.sleep(5);
 
@@ -52,12 +53,11 @@ public class Enemy2 extends EnemyUnit {
 							moveright();
 						}
 						bulletCreate();
-						enemyAttack();
 						count++;
 
 						if (y > 900) {
 							System.out.println("enemy2 쓰레드 종료");
-							break;
+							islife = false;
 						}
 
 					} catch (InterruptedException e) {
@@ -67,7 +67,7 @@ public class Enemy2 extends EnemyUnit {
 			}
 		});
 
-		t2.setName("enemy2");
+		t2.setName("enemy2Move");
 		t2.start();
 	}
 
@@ -76,7 +76,7 @@ public class Enemy2 extends EnemyUnit {
 			@Override
 			public void run() {
 				count = 0;
-				while (true) {
+				while (islife) {
 					try {
 						Thread.sleep(5);
 
@@ -89,11 +89,11 @@ public class Enemy2 extends EnemyUnit {
 
 						if (y < -300) {
 							System.out.println("enemy2 쓰레드 종료");
-							break;
+							islife =false; //break 말고 이게 더 보기 좋은 거 같음.
 						}
 
 						bulletCreate();
-						enemyAttack();
+						//enemyAttack();
 						count++;
 
 					} catch (InterruptedException e) {
@@ -103,7 +103,7 @@ public class Enemy2 extends EnemyUnit {
 			}
 		});
 
-		t2.setName("enemy2");
+		t2.setName("enemy2Move");
 		t2.start();
 	}
 
@@ -133,10 +133,6 @@ public class Enemy2 extends EnemyUnit {
 							explosePlayer(enemy2); // 플레이어 총알이 적기 충돌시
 						}
 						Thread.sleep(10);
-//						if(playerPlane.getLife() <= 0) {
-//							Thread.sleep(100);						//1초후
-//							System.exit(1);							//프로그램 종료
-//						}
 
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -164,13 +160,13 @@ public class Enemy2 extends EnemyUnit {
 		enemyDraw(g);
 	}
 
-	private void enemyAttack() {
-		for (int i = 0; i < enemyAttackkList.size(); i++) {
-			enemyAttack = enemyAttackkList.get(i);
-//			if (enemy2.life > 0)  //발사는 여기서 구현하면 곤란
-//				enemyAttack.fire();
-		}
-	}
+//	private void enemyAttack() { //이제 안쓰는 메서드
+//		for (int i = 0; i < enemyAttackkList.size(); i++) {
+//			enemyAttack = enemyAttackkList.get(i);
+////			if (enemy2.life > 0)  //발사는 여기서 구현하면 곤란
+////				enemyAttack.fire();
+//		}
+//	}
 
 	public void enemyDraw(Graphics g) { // 그림그리기
 		g.drawImage(image, x, y, width, height, null);

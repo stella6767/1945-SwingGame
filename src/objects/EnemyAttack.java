@@ -6,11 +6,11 @@ import javax.swing.ImageIcon;
 
 public class EnemyAttack implements Runnable {
 	// 클래스 이름을 크게 Bullet이라 짓고 둘이 상속받는게 좋았을 듯, 일단 시간없으니 진행
-	
+
 	private EnemyAttack enemyAttack = this;
-	
+
 	private frame.GameFrame gameFrame;
-	
+
 	private EnemyUnit enemyunit;
 	private PlayerPlane player;
 	private boolean collision;
@@ -138,19 +138,14 @@ public class EnemyAttack implements Runnable {
 	public void run() {
 
 		while (islife) {
-			
- 			fire(); 
-			
+
+			fire();
+
 			if (x > 1000 || x < -500 || y < -500 || y > 1000) {
 				// System.out.println("bullet thread terminate");
-				return; // Thread 종료구문
+				islife = false; // Thread 종료구문
 			}
-			
-//			if(enemyunit.getLife() == 0) {
-//				speed = speed+1;
-//			}
-			
-			
+
 			if (!player.getInvincible()) { // 무적상태가 아니면
 
 				crash();
@@ -160,15 +155,14 @@ public class EnemyAttack implements Runnable {
 						explosePlayer(player); // 충돌 폭발 메서드
 					}
 					Thread.sleep(10);
-				if (player.getLife() <= 0) {
-					
-					System.out.println("hp 다 끝나면 종료");
-					Thread.sleep(100); // 1초후
-					//gameFrame.change("gameTitle");//context를 넘기는 과정 귀찮아서 생략한다.
-					System.exit(1); // 프로그램 종료
-				}
 
+					if (player.getLife() <= 0) { //이거 여기다 안 쓸거임
 
+						System.out.println("hp 다 끝나면 종료");
+						Thread.sleep(100); // 1초후
+						// gameFrame.change("gameTitle");//context를 넘기는 과정 귀찮아서 생략한다.
+						//System.exit(1); // 프로그램 종료
+					}
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -193,26 +187,25 @@ public class EnemyAttack implements Runnable {
 		try {
 			ImageIcon explosionIcon = new ImageIcon("images/explosion.gif");
 			player.setIcon(explosionIcon);
-			//enemyAttack= null; //부딪칠시 적 총알 사라짐 안되네... 자바에서는 객체를 직접 제거하는 게 안되고
-			y=1000; //가비지 컬렉션으로만 가능, 강제로 제거하려면 finallize 함수?
-			
-			islife = false;//이게아닌가벼
-			Thread.sleep(1000); 
-			
-			player.setInvincible(true); //무적상태
-			
+			// enemyAttack= null; //부딪칠시 적 총알 사라짐 안되네... 자바에서는 객체를 직접 제거하는 게 안되고
+			y = 1000; // 가비지 컬렉션으로만 가능, 강제로 제거하려면 finallize 함수?
+
+			islife = false;// 이게아닌가벼
+			Thread.sleep(1000);
+
+			player.setInvincible(true); // 무적상태
+
 			player.setIcon(player.getPlayerInvincibleIcon());
 			player.setLife(player.getLife() - 1);
 			System.out.println("남은목숨:" + player.getLife());
 			player.setX(200);
 			player.setY(520);
-			
-			Thread.sleep(1500); 
-			
-			
+
+			Thread.sleep(1500);
+
 			player.setIcon(player.getPlayerIcon());
 			player.setInvincible(false);
-			
+
 			player.repaint();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
