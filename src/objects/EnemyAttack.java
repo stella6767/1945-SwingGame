@@ -151,7 +151,7 @@ public class EnemyAttack implements Runnable {
 //			}
 			
 			
-			if (player.getLife() > 0) { // 생명이 0보다 크면
+			if (!player.getInvincible()) { // 무적상태가 아니면
 
 				crash();
 
@@ -195,13 +195,24 @@ public class EnemyAttack implements Runnable {
 			player.setIcon(explosionIcon);
 			//enemyAttack= null; //부딪칠시 적 총알 사라짐 안되네... 자바에서는 객체를 직접 제거하는 게 안되고
 			y=1000; //가비지 컬렉션으로만 가능, 강제로 제거하려면 finallize 함수?
+			
 			islife = false;//이게아닌가벼
 			Thread.sleep(1000); 
-			player.setIcon(player.getPlayerIcon());
+			
+			player.setInvincible(true); //무적상태
+			
+			player.setIcon(player.getPlayerInvincibleIcon());
 			player.setLife(player.getLife() - 1);
 			System.out.println("남은목숨:" + player.getLife());
 			player.setX(200);
 			player.setY(520);
+			
+			Thread.sleep(1500); 
+			
+			
+			player.setIcon(player.getPlayerIcon());
+			player.setInvincible(false);
+			
 			player.repaint();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

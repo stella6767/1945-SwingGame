@@ -21,7 +21,7 @@ public class Enemy2 extends EnemyUnit {
 		this.width = w;
 		this.height = h;
 		this.image = new ImageIcon("images/enemy2.png").getImage();
-		this.life = 7;
+		this.life = 10;
 		this.crushCheck = false;
 
 		this.player.contextAdd(enemy2);
@@ -114,7 +114,7 @@ public class Enemy2 extends EnemyUnit {
 			@Override
 			public void run() {
 
-				while (player.getLife() > 0 && y < 900 && y > -300) {
+				while (!player.getInvincible() && y < 900 && y > -300) {
 
 					if (Math.abs((player.getX() + player.getWidth() / 2) - (x + player.getWidth() / 2)) < (width / 2
 							+ player.getWidth() / 2)

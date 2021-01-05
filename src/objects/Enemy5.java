@@ -75,7 +75,7 @@ public class Enemy5 extends EnemyUnit {
 			@Override
 			public void run() {
 
-				while (player.getLife() > 0) {
+				while (!player.getInvincible() && y < 900 && y > -300) {
 
 					if (Math.abs((player.getX() + player.getWidth() / 2) - (x + player.getWidth() / 2)) < (width / 2
 							+ player.getWidth() / 2)

@@ -180,7 +180,7 @@ public class BossAttack implements Runnable {
 	@Override
 	public void run() {
 
-		while (player.getLife() > 0 && islife) { // 생명이 0보다 크면
+		while (!player.getInvincible() && y < 900 && y > -300 && islife) { // 생명이 0보다 크면
 
 			crash();
 
@@ -222,14 +222,23 @@ public class BossAttack implements Runnable {
 		try {
 			ImageIcon explosionIcon = new ImageIcon("images/explosion.gif");
 			player.setIcon(explosionIcon);
-			//y=1000; //플레이어와 부딪히면 보스총알 사라짐
+			y=1000; //플레이어와 부딪히면 보스총알 사라짐
 			islife = false;
+			
 			Thread.sleep(1000);
-			player.setIcon(player.getPlayerIcon());
+			
+			player.setInvincible(true); //무적상태
+			player.setIcon(player.getPlayerInvincibleIcon());			
 			player.setLife(player.getLife() - 1);
 			System.out.println("남은목숨:" + player.getLife());
 			player.setX(200);
 			player.setY(520);
+			
+			Thread.sleep(1500); 
+			
+			player.setIcon(player.getPlayerIcon());
+			player.setInvincible(false);
+			
 			player.repaint();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
