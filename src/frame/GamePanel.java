@@ -55,7 +55,9 @@ public class GamePanel extends JPanel { // 인게임 패널
 		gamePanel.add(laLifecount);
 		gamePanel.add(laLifecount2);
 		gamePanel.add(laLifecount3);
-
+		laLifecount.setBounds(0, 0, 50, 50);
+		laLifecount2.setBounds(50, 0, 50, 50);
+		laLifecount3.setBounds(100, 0, 50, 50);
 		
 		new Thread(new Runnable() {
 			@Override
@@ -123,9 +125,7 @@ public class GamePanel extends JPanel { // 인게임 패널
 		laLifecount = new JLabel(lifeCounticon);
 		laLifecount2 = new JLabel(lifeCounticon);
 		laLifecount3 = new JLabel(lifeCounticon);
-		laLifecount.setBounds(0, 0, 50, 50);
-		laLifecount2.setBounds(50, 0, 50, 50);
-		laLifecount3.setBounds(100, 0, 50, 50);
+
 	}
 
 	public void lifeCounting() {

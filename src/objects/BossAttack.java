@@ -219,10 +219,10 @@ public class BossAttack implements Runnable {
 			player.setIcon(explosionIcon);
 			y=1000; //플레이어와 부딪히면 보스총알 사라짐
 			islife = false;
+			player.setInvincible(true); //무적상태
 			
 			Thread.sleep(1000);
 			
-			player.setInvincible(true); //무적상태
 			player.setIcon(player.getPlayerInvincibleIcon());			
 			player.setLife(player.getLife() - 1);
 			System.out.println("남은목숨:" + player.getLife());

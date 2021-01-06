@@ -135,9 +135,10 @@ public abstract class EnemyUnit extends JLabel { // public으로 선언해야지
 			player.setIcon(explosionIcon);
 			enemyUnit.image = explosionIcon.getImage();
 			System.out.println("적기와 아군비행기 충돌");
+			player.setInvincible(true); // 무적상태
 			Thread.sleep(500);
 
-			player.setInvincible(true); // 무적상태
+			
 			player.setIcon(player.getPlayerInvincibleIcon());
 			player.setLife(player.getLife() - 1);
 			System.out.println("남은목숨:" + player.getLife());

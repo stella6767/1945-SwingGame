@@ -184,9 +184,8 @@ public class EnemyAttack implements Runnable {
 			y = 1000; // 가비지 컬렉션으로만 가능, 강제로 제거하려면 finallize 함수?
 
 			islife = false;// 이게아닌가벼
-			Thread.sleep(1000);
-
 			player.setInvincible(true); // 무적상태
+			Thread.sleep(1000);
 
 			player.setIcon(player.getPlayerInvincibleIcon());
 			player.setLife(player.getLife() - 1);
