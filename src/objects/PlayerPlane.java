@@ -8,13 +8,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import frame.GameFrame;
+import frame.GameTitle;
 
 public class PlayerPlane extends JLabel {
 
 	public PlayerPlane player = this;
 	public final static String TAG = "Player: ";
 
-	private GameFrame gamePanel;
+	private GameFrame gameFrame;
 	private EnemyUnit enemyUnit;
 	private Boss boss;
 	ArrayList<EnemyUnit> enemyUnitList = new ArrayList<EnemyUnit>(); // 총알피격시 객체를 담을 벡터
@@ -26,7 +27,7 @@ public class PlayerPlane extends JLabel {
 	private int height = 65;
 	private int x = (GameFrame.SCREEN_WIDTH / 2) - (width / 2);
 	private int y = (GameFrame.SCREEN_HEIGHT - (height * 2));
-	private int life = 10;
+	private int life = 3;
 	private int pCount; // 총알 발사 속도
 	private boolean invincible; // 무적상태
 	
@@ -46,8 +47,9 @@ public class PlayerPlane extends JLabel {
 
 	ArrayList<Integer> check = new ArrayList<>(); // 필요없는 총알인덱스 체크용
 
-	public PlayerPlane(String PLANE) {
-
+	public PlayerPlane(GameFrame gameFrame,String PLANE) {
+		
+		this.gameFrame = gameFrame;
 		playerIcon = new ImageIcon("images/Player" + PLANE + ".png");
 		playerInvincibleIcon = new ImageIcon("images/" + PLANE + "무적.png");
 
@@ -63,10 +65,17 @@ public class PlayerPlane extends JLabel {
 		if (PLANE.equals("PLANE3")) {
 			select = 3;
 		}
+		
 		setIcon(playerIcon);
-
 		move();
+	}
 
+	public boolean getIslife() {
+		return islife;
+	}
+
+	public void setIslife(boolean islife) {
+		this.islife = islife;
 	}
 
 	public PlayerPlane getPlayer() {
@@ -77,13 +86,6 @@ public class PlayerPlane extends JLabel {
 		this.player = player;
 	}
 
-	public GameFrame getGamePanel() {
-		return gamePanel;
-	}
-
-	public void setGamePanel(GameFrame gamePanel) {
-		this.gamePanel = gamePanel;
-	}
 
 	public EnemyUnit getEnemyUnit() {
 		return enemyUnit;
@@ -265,6 +267,7 @@ public class PlayerPlane extends JLabel {
 				while (islife) {
 					try {
 						Thread.sleep(5);
+						gameOver();
 						keyProcess();
 						playerAttackProcess();
 						PlayerBullet();
@@ -473,4 +476,14 @@ public class PlayerPlane extends JLabel {
 		return result;
 	}
 
+	
+	private void gameOver() {
+		if(life<=0) {
+			islife =false; //dispose 해도 안의 쓰레드는 살아있다...  이 명령 추가.. 그냥 완전 다 삭제해주는 함수는 없나...
+			gameFrame.isgame = false;
+			gameFrame.dispose(); 
+			new GameFrame();
+		}
+		
+	}
 }

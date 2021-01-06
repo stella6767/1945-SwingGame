@@ -156,13 +156,6 @@ public class EnemyAttack implements Runnable {
 					}
 					Thread.sleep(10);
 
-					if (player.getLife() <= 0) { //이거 여기다 안 쓸거임
-
-						System.out.println("hp 다 끝나면 종료");
-						Thread.sleep(100); // 1초후
-						// gameFrame.change("gameTitle");//context를 넘기는 과정 귀찮아서 생략한다.
-						//System.exit(1); // 프로그램 종료
-					}
 
 				} catch (Exception e) {
 					e.printStackTrace();

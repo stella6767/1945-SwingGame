@@ -60,8 +60,8 @@ public class GamePanel extends JPanel { // 인게임 패널
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				while (true) {
-					gameFrame.isgame = true;
+				gameFrame.isgame = true;
+				while (gameFrame.isgame) {
 					setLayout(null);
 					
 

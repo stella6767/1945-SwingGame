@@ -148,13 +148,13 @@ public class SelectAPI extends JPanel implements screenSize{
 	
 	public void batch(String playerPlane) { // 비행기 선택 후 비행기 new add
 		if (playerPlane == "playerPlane") {
-			gameFrame.player = new PlayerPlane("PLANE1");
+			gameFrame.player = new PlayerPlane(gameFrame,"PLANE1");
 			gameFrame.gamePanel.add(gameFrame.player);
 		} else if (playerPlane == "playerPlane2") {
-			gameFrame.player = new PlayerPlane("PLANE2");
+			gameFrame.player = new PlayerPlane(gameFrame,"PLANE2");
 			gameFrame.gamePanel.add(gameFrame.player);
 		} else if (playerPlane == "playerPlane3") {
-			gameFrame.player = new PlayerPlane("PLANE3");
+			gameFrame.player = new PlayerPlane(gameFrame, "PLANE3");
 			gameFrame.gamePanel.add(gameFrame.player);
 		}
 	}
