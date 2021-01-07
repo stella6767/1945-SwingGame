@@ -105,7 +105,7 @@ public class Enemy5 extends EnemyUnit {
 	}
 
 	private void bulletCreate() {
-		if (count % 100 == 0) {
+		if (count % 150 == 0) {
 			enemyAttack = new EnemyAttack(enemy5, player, x + 20, y + 40, 270, 3, 20, 20);
 			enemyAttackkList.add(enemyAttack);
 			enemyAttack = new EnemyAttack(enemy5, player, x + 40, y + 40, 270, 3, 20, 20);

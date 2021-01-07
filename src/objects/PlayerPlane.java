@@ -20,8 +20,8 @@ public class PlayerPlane extends JLabel {
 	private Boss boss;
 	ArrayList<EnemyUnit> enemyUnitList = new ArrayList<EnemyUnit>(); // 총알피격시 객체를 담을 벡터
 
-	private ImageIcon playerIcon;
-	private ImageIcon playerInvincibleIcon;
+	private ImageIcon playerIcon; //기본 아이콘
+	private ImageIcon playerInvincibleIcon; //무적상태시 아이콘
 
 	private int width = 70;
 	private int height = 65;
