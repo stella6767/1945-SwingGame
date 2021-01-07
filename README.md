@@ -2,7 +2,7 @@
 
 
 ## 시연영상   
-[![1945](https://static.wikia.nocookie.net/strikersworld/images/0/0e/Strikers-1945-title.png/revision/latest/scale-to-width-down/340?cb=20090925143250)](https://www.youtube/pDc7JunSuEU) 
+[![1945](https://static.wikia.nocookie.net/strikersworld/images/0/0e/Strikers-1945-title.png/revision/latest/scale-to-width-down/340?cb=20090925143250)](https://www.youtube.com/watch?v=pDc7JunSuEU) 
 
 
 
